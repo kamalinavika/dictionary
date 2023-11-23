@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dictionary App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Dictionary</h1>
+    <form action="/add" method="post">
+        <label for="key">Key:</label>
+        <input type="text" id="key" name="key">
+        <label for="value">Value:</label>
+        <input type="text" id="value" name="value">
+        <input type="submit" value="Add">
+    </form>
+    <ul>
+        {% for item in items %}
+            <li>
+                {{ item.key }}: {{ item.value }}
+                <form action="/delete/{{ item.id }}" method="post">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

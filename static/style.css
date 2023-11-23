@@ -1,0 +1,52 @@
+to  Everyone
+@app.route('/add', methods=['POST'])
+def add():
+    key = request.form['key']
+    value = request.form['value']
+    conn = sqlite3.connect('data.db')
+    c = conn.cursor()
+    c.execute("INSERT INTO dictionary (key, value) VALUES (?, ?)", (key, value))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('index'))
+
+@app.route('/delete/<int:item_id>', methods=['POST'])
+def delete(item_id):
+    conn = sqlite3.connect('data.db')
+    c = conn.cursor()
+    c.execute("DELETE FROM dictionary WHERE id=?", (item_id,))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('index'))
+
+if __name__ == '__main__':
+    app.run(debug=True)
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+button {
+    background-color: #ff3333;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
